@@ -1,6 +1,6 @@
 {
   "name": "@superblocksteam/javascript",
-  "version": "0.1692.0",
+  "version": "0.1753.0",
   "description": "Superblocks JavaScript Plugin",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -33,7 +33,7 @@
     "esprima": "4.0.1",
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.21",
-    "moment": "2.29.2",
+    "moment": "2.29.4",
     "piscina": "^3.2.0",
     "xmlbuilder2": "3.0.2",
     "minimist": "1.2.6"
