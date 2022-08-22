@@ -1,6 +1,6 @@
 {
   "name": "@superblocksteam/javascript",
-  "version": "0.1971.0",
+  "version": "0.1995.1",
   "description": "Superblocks JavaScript Plugin",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
