@@ -32,6 +32,9 @@ export default class JavascriptPlugin extends LanguagePlugin {
     try {
       const executionTimeout = Number(this.pluginConfiguration.javascriptExecutionTimeoutMs);
       // TODO: Wrap the user's code in a library that handles the FileReader abstraction
+      if (!actionConfiguration.body) {
+        return ExecutionOutput.fromJSONString('null');
+      }
       const output = await this.executeInWorkerPool(
         {
           context: context,

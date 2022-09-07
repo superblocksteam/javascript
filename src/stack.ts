@@ -4,7 +4,7 @@ export default function cleanStack(stack: string, lineOffset: number): string {
   const errorLines = stack.replace(/\\/g, '/').split('\n');
 
   // Find error line number
-  let errorLineNumber: number = parseInt(errorLines[0].split(':').pop());
+  let errorLineNumber: number = parseInt(errorLines[0].split(':').pop() ?? '');
 
   const errorStack = errorLines
     .filter((line) => {
