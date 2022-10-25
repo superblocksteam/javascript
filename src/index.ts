@@ -21,7 +21,7 @@ export default class JavascriptPlugin extends LanguagePlugin {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async evaluateBindingPairs(code: string, entitiesToExtract: Set<string>, dataContext: Record<string, any>): Promise<EvaluationPair[]> {
-    return await extractJsEvaluationPairsWithTokenizer(code, entitiesToExtract, dataContext, tokenize);
+    return extractJsEvaluationPairsWithTokenizer(code, entitiesToExtract, dataContext, tokenize);
   }
 
   async execute({
