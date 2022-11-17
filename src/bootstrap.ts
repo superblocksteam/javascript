@@ -1,4 +1,4 @@
-import { ExecutionContext, ExecutionOutput } from '@superblocksteam/shared';
+import { ExecutionContext, ExecutionOutput, decodeBytestringsExecutionContext } from '@superblocksteam/shared';
 import {
   addLogListenersToVM,
   generateJSLibrariesImportString,
@@ -14,6 +14,9 @@ module.exports = async function() {
   ${generateJSLibrariesImportString()}
 
   function serialize(buffer, mode) {
+    if (mode === 'raw') {
+      return buffer;
+    }
     if (mode === 'binary' || mode === 'text') {
       // utf8 encoding is lossy for truly binary data, but not an error in JS
       return buffer.toString(mode === 'binary' ? 'base64' : 'utf8');
@@ -53,24 +56,14 @@ module.exports = async function() {
   });
 
   var $augmentedConsole = (function(cons) {
-    const logObject = (args) => {
-      var outputs = [];
-      for (arg of args) {
-        try {
-          outputs.push(JSON.stringify(arg, null, 2));
-        } catch (err) {
-          outputs.push(arg);
-        }
-      }
-      cons.log(outputs.join('\\n'));
-    };
+    const util = require('util');
     return {
         ...cons,
-        log: function(...args) {
-          logObject(args);
+        log(...args) {
+          cons.log(util.format(...args));
         },
-        dir: function(...args) {
-          logObject(args);
+        dir(obj) {
+          cons.log(util.inspect(obj));
         }
     };
   }(console));
@@ -92,6 +85,7 @@ export default async ({ context, code, files, executionTimeout }: JavascriptProc
 
   try {
     const vm = nodeVMWithContext(context, filePaths, executionTimeout);
+    decodeBytestringsExecutionContext(context, true);
     addLogListenersToVM(vm, ret);
     ret.output = await vm.run(
       `${sharedCode}
